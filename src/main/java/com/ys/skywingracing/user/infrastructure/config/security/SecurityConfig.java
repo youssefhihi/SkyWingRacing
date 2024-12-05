@@ -44,7 +44,7 @@ public class SecurityConfig {
 
         var u1 = User.withUsername("ussef")
                 .password(passwordEncoder().encode("1234"))
-                .roles("ADMIN")
+                .roles("USER")
                 .build();
         IMU.createUser(u1);
         return IMU;
