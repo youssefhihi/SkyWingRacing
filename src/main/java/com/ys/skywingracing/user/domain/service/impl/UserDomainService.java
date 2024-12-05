@@ -27,9 +27,6 @@ public class UserDomainService implements UserService {
     private final UserMapper mapper;
     private final PasswordEncoder passwordEncoder;
 
-    public Optional<User> getUserByUsername(String username) {
-        return repository.findByUsername(username);
-    }
 
     @Override
     public UserResponseDto saveUser(CreateUserRequestDto request) {
