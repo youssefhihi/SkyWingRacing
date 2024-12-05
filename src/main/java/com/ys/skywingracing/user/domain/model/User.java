@@ -1,7 +1,6 @@
 package com.ys.skywingracing.user.domain.model;
 
 import com.ys.skywingracing.user.domain.enums.Role;
-import com.ys.skywingracing.user.domain.objectValue.Email;
 import com.ys.skywingracing.user.domain.objectValue.FullName;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -12,12 +11,12 @@ import lombok.*;
 
 import java.util.UUID;
 
-@Entity
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Table(name = "users")
 public class User {
 

@@ -23,6 +23,4 @@ public class userController {
         return new ResponseEntity<>(userUpdated, HttpStatus.OK);
     }
 
-
-
 }
