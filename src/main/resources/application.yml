@@ -1,12 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/skyWingRacing
+    url: jdbc:postgresql://localhost:5433/skyrace
     username: postgres
-    password: password
+    password: 1234
     driver-class-name: org.postgresql.Driver
-    hikari:
-      maximum-pool-size: 10
-
   jpa:
     hibernate:
       ddl-auto: update
@@ -34,3 +31,6 @@ spring:
     version: 1.0
     title: Sky Wing Racing
     description: Sky Wing Racing
+
+
+
