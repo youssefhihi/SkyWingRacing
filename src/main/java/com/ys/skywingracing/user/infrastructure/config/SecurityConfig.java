@@ -1,11 +1,16 @@
-package com.ys.skywingracing.user.infrastructure.config.security;
+package com.ys.skywingracing.user.infrastructure.config;
 
 
+import com.ys.skywingracing.user.infrastructure.config.security.AccessDenied.CustomAccessDeniedHandler;
+import com.ys.skywingracing.user.infrastructure.config.security.provider.CustomAuthenticationProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,7 +25,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final UserDetailsService userDetailsService;
+
+//    private final CustomAuthenticationProvider customAuthenticationProvider;
+    private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,7 +41,10 @@ public class SecurityConfig {
                         .requestMatchers("/api/private/**").authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .httpBasic(Customizer.withDefaults());
+                .httpBasic(Customizer.withDefaults())
+                .exceptionHandling(exception -> exception
+                        .accessDeniedHandler(customAccessDeniedHandler)
+                );
         return http.build();
     }
 
@@ -44,7 +54,7 @@ public class SecurityConfig {
 
         var u1 = User.withUsername("ussef")
                 .password(passwordEncoder().encode("1234"))
-                .roles("USER")
+                .roles("ADMIN")
                 .build();
         IMU.createUser(u1);
         return IMU;
@@ -55,11 +65,11 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public DaoAuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService);
-        authProvider.setPasswordEncoder(passwordEncoder());
-        return authProvider;
-    }
+//
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.authenticationProvider(customAuthenticationProvider);
+//        return auth.build();
+//    }
+
 }
