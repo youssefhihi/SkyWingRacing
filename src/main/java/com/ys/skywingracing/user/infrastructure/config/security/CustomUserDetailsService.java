@@ -4,6 +4,7 @@ import com.ys.skywingracing.user.domain.exception.usernameException.UsernameNotF
 import com.ys.skywingracing.user.domain.model.User;
 import com.ys.skywingracing.user.infrastructure.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
