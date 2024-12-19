@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Profile;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -24,9 +25,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @RequiredArgsConstructor
+@Profile({"dev", "prod"})
 public class SecurityConfig {
 
-//    private final CustomAuthenticationProvider customAuthenticationProvider;
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     @Bean
@@ -64,12 +65,5 @@ public class SecurityConfig {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
-//
-//    @Bean
-//    public AuthenticationManager authenticationManager(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.authenticationProvider(customAuthenticationProvider);
-//        return auth.build();
-//    }
 
 }

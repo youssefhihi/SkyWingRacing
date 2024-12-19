@@ -9,4 +9,5 @@ import java.util.UUID;
 
 public interface PigeonRepository extends JpaRepository<Pigeon, UUID> {
     Optional<Pigeon> findByBandNumber(BandNumber bandNumber);
+
 }

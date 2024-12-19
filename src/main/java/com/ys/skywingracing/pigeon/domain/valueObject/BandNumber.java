@@ -2,6 +2,7 @@ package com.ys.skywingracing.pigeon.domain.valueObject;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.ys.skywingracing.pigeon.domain.exception.BandNumberException;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ public record BandNumber(@NotBlank String value) {
 
     private static void validate ( String value ) {
         if (!BAND_NUMBER_PATTERN.matcher(value).matches()) {
-            throw new IllegalArgumentException(
+            throw new BandNumberException(
                     "Invalid band number format. Expected format: AU 2003 XYZ 3234534"
             );
         }
@@ -26,7 +27,7 @@ public record BandNumber(@NotBlank String value) {
         int year = Integer.parseInt(parts[1]);
         LocalDateTime now = LocalDateTime.now();
         if (year > now.getYear() || year < now.minusYears(10).getYear()) {
-            throw new IllegalArgumentException(
+            throw new BandNumberException(
                     "Year must be between " + now.minusYears(10).getYear() +
                             " and " + now.getYear() + "."
             );

@@ -4,6 +4,7 @@ import com.ys.skywingracing.pigeon.application.dto.request.PigeonRequestDTO;
 import com.ys.skywingracing.pigeon.application.dto.response.PigeonResponseDTO;
 import com.ys.skywingracing.pigeon.application.mapper.PigeonMapper;
 import com.ys.skywingracing.pigeon.application.service.PigeonApplicationService;
+import com.ys.skywingracing.pigeon.domain.exception.BandNumberException;
 import com.ys.skywingracing.pigeon.domain.exception.NotFoundException;
 import com.ys.skywingracing.pigeon.domain.model.Pigeon;
 import com.ys.skywingracing.pigeon.domain.service.PigeonDomainService;
@@ -25,6 +26,12 @@ public class DefaultPigeonDomainService implements PigeonDomainService, PigeonAp
 
     @Override
     public PigeonResponseDTO create (PigeonRequestDTO dto ) {
+        repository.findByBandNumber(dto.bandNumber())
+                .ifPresent(pigeon -> {
+                    throw new BandNumberException("Pigeon already exists with Band Number: " + dto.bandNumber());
+                });
+
+
         return mapper.toDto(repository.save(mapper.toEntity(dto)));
     }
 

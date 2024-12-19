@@ -1,4 +1,7 @@
 spring:
+  profiles:
+    active: dev
+
   datasource:
     url: jdbc:postgresql://localhost:5433/skyrace
     username: postgres
@@ -22,6 +25,8 @@ spring:
       org.springframework.web: DEBUG
       com.ys.skywingracing: DEBUG
 
+
+
   ##---------- API information ---------------------------------
   contact:
     email: youssefhihi18@gmail.com
@@ -31,6 +36,7 @@ spring:
     version: 1.0
     title: Sky Wing Racing
     description: Sky Wing Racing
+
 
 
 
